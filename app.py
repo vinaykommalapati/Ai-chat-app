@@ -10,9 +10,8 @@ def chat(user_message):
         "role": "user",
         "content": user_message
     })
-
     response = client.chat.completions.create(
-        model="llama3-8b-8192",
+        model="llama-3.3-70b-versatile",
         messages=[
             {
                 "role": "system",
@@ -21,16 +20,12 @@ def chat(user_message):
         ] + conversation_history,
         max_tokens=1024
     )
-
     assistant_message = response.choices[0].message.content
-
     conversation_history.append({
         "role": "assistant",
         "content": assistant_message
     })
-
     return assistant_message
-
 
 def main():
     print("=" * 50)
@@ -41,18 +36,14 @@ def main():
 
     while True:
         user_input = input("You: ").strip()
-
         if not user_input:
             continue
-
         if user_input.lower() in ["quit", "exit"]:
             print("Goodbye! 👋")
             break
-
         print("AI: Thinking...", end="\r")
         response = chat(user_input)
         print(f"AI: {response}\n")
-
 
 if __name__ == "__main__":
     main()
